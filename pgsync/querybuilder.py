@@ -3,6 +3,7 @@
 import threading
 import typing as t
 from collections import defaultdict
+import copy
 
 import sqlalchemy as sa
 
@@ -167,7 +168,7 @@ class QueryBuilder(threading.local):
 
             self._cache[(node_a, node_b)] = foreign_keys
 
-        return self._cache[(node_a, node_b)]
+        return copy.deepcopy(self._cache[(node_a, node_b)])
 
     def _get_foreign_keys(self, node_a: Node, node_b: Node) -> dict:
         """This is for handling through nodes."""
@@ -195,7 +196,7 @@ class QueryBuilder(threading.local):
 
             self._cache[(node_a, node_b)] = foreign_keys
 
-        return self._cache[(node_a, node_b)]
+        return copy.deepcopy(self._cache[(node_a, node_b)])
 
     def _get_column_foreign_keys(
         self,
